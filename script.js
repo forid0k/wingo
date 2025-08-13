@@ -1,18 +1,18 @@
 function getPrediction() {
     const colors = ["Green", "Violet", "Red"];
-    let predictions = [];
+    // Randomly select one color as the prediction
+    const color = colors[Math.floor(Math.random() * colors.length)];
 
-    colors.forEach(color => {
-        let nums = [];
-        if(color === "Green") nums = getRandomNumbers(0,4,3);
-        else if(color === "Violet") nums = getRandomNumbers(5,8,2);
-        else nums = getRandomNumbers(0,9,3);
+    // Random numbers based on color
+    let nums = [];
+    if(color === "Green") nums = getRandomNumbers(0,4,3);
+    else if(color === "Violet") nums = getRandomNumbers(5,8,3);
+    else nums = getRandomNumbers(0,9,3);
 
-        const bigSmall = Math.random() > 0.5 ? "Big" : "Small";
-        predictions.push({color: color, numbers: nums, bet: bigSmall});
-    });
+    // Random Big/Small
+    const bigSmall = Math.random() > 0.5 ? "Big" : "Small";
 
-    return predictions;
+    return {color: color, numbers: nums, bet: bigSmall};
 }
 
 function getRandomNumbers(min,max,count){
@@ -29,15 +29,14 @@ function showPrediction(){
     const container = document.getElementById('predictions');
     container.innerHTML = '';
 
-    data.forEach(item => {
-        const colorDiv = document.createElement('div');
-        colorDiv.innerHTML = `<h3 class="${item.color.toLowerCase()}">${item.color} - ${item.bet}</h3>`;
-        item.numbers.forEach(num => {
-            const bubble = document.createElement('span');
-            bubble.className = 'bubble';
-            bubble.textContent = num;
-            colorDiv.appendChild(bubble);
-        });
-        container.appendChild(colorDiv);
+    const colorDiv = document.createElement('div');
+    colorDiv.innerHTML = `<h3 class="${data.color.toLowerCase()}">${data.color} - ${data.bet}</h3>`;
+    data.numbers.forEach(num => {
+        const bubble = document.createElement('span');
+        bubble.className = 'bubble';
+        bubble.textContent = num;
+        colorDiv.appendChild(bubble);
     });
+
+    container.appendChild(colorDiv);
 }
