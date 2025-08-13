@@ -4,25 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WinGo Prediction Bot</title>
-<style>
-body { font-family: Arial; text-align: center; padding: 20px; background: #111; color: #fff; }
-button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; }
-.green { background: #00ff00; color: #000; }
-.violet { background: #8a2be2; color: #fff; }
-.red { background: #ff0000; color: #fff; }
-.bubble { display: inline-block; margin: 5px; padding: 10px; border-radius: 50%; background: #333; width: 40px; height: 40px; line-height: 40px; }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h1>WinGo Prediction Bot</h1>
 <button onclick="getPrediction()">Show Prediction</button>
 
-<div id="predictions" style="margin-top:20px;"></div>
+<div id="predictions"></div>
 
 <script>
 function getPrediction() {
-    fetch('/api/predict')
+    fetch('https://<YOUR_BACKEND_URL>/api/predict')  // Replace with your deployed Flask API URL
     .then(response => response.json())
     .then(data => {
         const container = document.getElementById('predictions');
@@ -38,7 +31,8 @@ function getPrediction() {
             });
             container.appendChild(colorDiv);
         });
-    });
+    })
+    .catch(err => alert('Prediction fetch failed!'));
 }
 </script>
 
