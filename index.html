@@ -9,32 +9,10 @@
 <body>
 
 <h1>WinGo Prediction Bot</h1>
-<button onclick="getPrediction()">Show Prediction</button>
+<button onclick="showPrediction()">Show Prediction</button>
 
 <div id="predictions"></div>
 
-<script>
-function getPrediction() {
-    fetch('https://h5.ar-lottery01.com/api/Lottery/GetBalance?language=en&random=863364217330&signature=7E4C718E3A6FA2D13FE8661B53125104&timestamp=1755112233')  // Replace with your deployed Flask API URL
-    .then(response => response.json())
-    .then(data => {
-        const container = document.getElementById('predictions');
-        container.innerHTML = '';
-        data.forEach(item => {
-            const colorDiv = document.createElement('div');
-            colorDiv.innerHTML = `<h3 class="${item.color.toLowerCase()}">${item.color} - ${item.bet}</h3>`;
-            item.numbers.forEach(num => {
-                const bubble = document.createElement('span');
-                bubble.className = 'bubble';
-                bubble.textContent = num;
-                colorDiv.appendChild(bubble);
-            });
-            container.appendChild(colorDiv);
-        });
-    })
-    .catch(err => alert('Prediction fetch failed!'));
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
