@@ -1,9 +1,8 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, jsonify
 import random
 
 app = Flask(__name__)
 
-# ডেমো প্রেডিকশন ফাংশন
 def predict_wingo():
     colors = ["Green", "Violet", "Red"]
     predictions = []
@@ -21,10 +20,6 @@ def predict_wingo():
 @app.route('/api/predict')
 def api_predict():
     return jsonify(predict_wingo())
-
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
