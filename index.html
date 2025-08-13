@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WinGo Prediction Bot</title>
+<style>
+body { font-family: Arial; text-align: center; padding: 20px; background: #111; color: #fff; }
+button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; }
+.green { background: #00ff00; color: #000; }
+.violet { background: #8a2be2; color: #fff; }
+.red { background: #ff0000; color: #fff; }
+.bubble { display: inline-block; margin: 5px; padding: 10px; border-radius: 50%; background: #333; width: 40px; height: 40px; line-height: 40px; }
+</style>
+</head>
+<body>
+
+<h1>WinGo Prediction Bot</h1>
+<button onclick="getPrediction()">Show Prediction</button>
+
+<div id="predictions" style="margin-top:20px;"></div>
+
+<script>
+function getPrediction() {
+    fetch('/api/predict')
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('predictions');
+        container.innerHTML = '';
+        data.forEach(item => {
+            const colorDiv = document.createElement('div');
+            colorDiv.innerHTML = `<h3 class="${item.color.toLowerCase()}">${item.color} - ${item.bet}</h3>`;
+            item.numbers.forEach(num => {
+                const bubble = document.createElement('span');
+                bubble.className = 'bubble';
+                bubble.textContent = num;
+                colorDiv.appendChild(bubble);
+            });
+            container.appendChild(colorDiv);
+        });
+    });
+}
+</script>
+
+</body>
+</html>
