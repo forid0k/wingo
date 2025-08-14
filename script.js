@@ -1,42 +1,33 @@
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function getPrediction() {
-    const colors = ["Green", "Violet", "Red"];
-    // Randomly select one color as the prediction
-    const color = colors[Math.floor(Math.random() * colors.length)];
+  // শুধু Green বা Red
+  const colors = ["Green", "Red"];
+  const color = colors[Math.floor(Math.random() * colors.length)];
 
-    // Random numbers based on color
-    let nums = [];
-    if(color === "Green") nums = getRandomNumbers(0,4,3);
-    else if(color === "Violet") nums = getRandomNumbers(5,8,3);
-    else nums = getRandomNumbers(0,9,3);
+  // সংখ্যার রেঞ্জ: Green → 0–4, Red → 0–9
+  const number = color === "Green" ? randInt(0, 4) : randInt(0, 9);
 
-    // Random Big/Small
-    const bigSmall = Math.random() > 0.5 ? "Big" : "Small";
+  // Big বা Small—র‍্যান্ডম
+  const size = Math.random() < 0.5 ? "Big" : "Small";
 
-    return {color: color, numbers: nums, bet: bigSmall};
+  return { color, size, number };
 }
 
-function getRandomNumbers(min,max,count){
-    let arr = [];
-    while(arr.length < count){
-        let n = Math.floor(Math.random() * (max - min + 1)) + min;
-        if(!arr.includes(n)) arr.push(n);
-    }
-    return arr;
-}
+function showPrediction() {
+  const { color, size, number } = getPrediction();
 
-function showPrediction(){
-    const data = getPrediction();
-    const container = document.getElementById('predictions');
-    container.innerHTML = '';
+  const container = document.getElementById("predictions");
+  container.innerHTML = "";
 
-    const colorDiv = document.createElement('div');
-    colorDiv.innerHTML = `<h3 class="${data.color.toLowerCase()}">${data.color} - ${data.bet}</h3>`;
-    data.numbers.forEach(num => {
-        const bubble = document.createElement('span');
-        bubble.className = 'bubble';
-        bubble.textContent = num;
-        colorDiv.appendChild(bubble);
-    });
+  const wrap = document.createElement("div");
+  wrap.innerHTML = `
+    <h2 class="${color.toLowerCase()}">${color}</h2>
+    <h3>${size}</h3>
+    <span class="bubble">${number}</span>
+  `;
 
-    container.appendChild(colorDiv);
+  container.appendChild(wrap);
 }
